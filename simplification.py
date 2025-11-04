@@ -82,20 +82,27 @@ def computeOriginsAndZAxes(thetas, alphas, ds, ase):
         z_axes (list[n-1, 3, 1]): z-axis of each frame [Z_0, Z_1, ..., Z_n-1]
     """
     T = sp.Matrix.eye(4)
-    origins = [T[:3, 3]]
-    z_axes = [T[:3, 2]]
+    origins = [T[:3, 3]]  # origin of base frame O_0
+    z_axes = [T[:3, 2]]  # z-axis of base frame Z_0
     
-    for i in range(len(thetas)):
-        T = forwardMat(thetas[:i+1], alphas[:i+1], ds[:i+1], ase[:i+1])
-        origins.append(T[:3, 3])
-        z_axes.append(T[:3, 2])
-    
+    # initial approach (less efficient)
     # for theta, alpha, d, a in zip(thetas, alphas, ds, ase):
     #     A_i = dhTransformMat(theta, alpha, d, a)
     #     T = T * A_i
     #     origins.append(T[:3, 3])
     #     z_axes.append(T[:3, 2])
     
+    for i in range(len(thetas)):
+        T = forwardMat(thetas[:i+1], alphas[:i+1], ds[:i+1], ase[:i+1])
+        origins.append(T[:3, 3])
+        z_axes.append(T[:3, 2])
+        # Debug prints
+        # print("\nTransformation Matrix T_0", i+1, ":\n")
+        # sp.pprint(sp.simplify(T), use_unicode=True)
+    
+    # Debug prints
+    # sp.pprint(origins, use_unicode=True)
+    # sp.pprint(z_axes, use_unicode=True)
     return origins, z_axes
 
 def computeJacobian(origins, z_axes, joint_types):
