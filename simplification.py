@@ -198,39 +198,63 @@ def printMatrices(origins, z_axes, J, compute_type='sym'):
 
 if __name__ == "__main__":
     
-    compute_type = 'sym'  # 'sym' or 'num'
-    joint_types = [ 'r', 'r', 'r', 'r', 'r', 'r' ]  #joint types
+    # 1. DH parameters for two joints (example)
+    # compute_type = 'sym'  # 'sym' or 'num'
+    # joint_types = [ 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
     
-    # DH parameters for two joints (example)
     # thetas = [ sp.symbols('theta_1'), sp.symbols('theta_2') ]
     # alphas = [ sp.symbols('alpha_1'), sp.symbols('alpha_2') ]
     # ds = [ sp.symbols('d_1'), sp.symbols('d_2') ]
     # ase = [ sp.symbols('a_1'), sp.symbols('a_2') ]
     
-    # this is for a 6 DOF robot arm (it's FK solution has error in the robot modeling and control book's solution P.92) - Cylindrical robot with spherical wrist (symbolic values)
+    # 2. DH for 6 DOF robot arm (it's FK solution has error in the robot modeling and control book's solution P.92) ! need to verify
+    # Cylindrical robot with spherical wrist (symbolic values)
+    # compute_type = 'sym'  # 'sym' or 'num'
+    # joint_types = [ 'r', 'p', 'p', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
+    
     # thetas = [ sp.symbols('theta_1'), 0, 0, sp.symbols('theta_4'), sp.symbols('theta_5'), sp.symbols('theta_6') ]
     # ds = [ sp.symbols('d_1'), sp.symbols('d_2'), sp.symbols('d_3'), 0, 0, sp.symbols('d_6') ]
     # ase = [ 0, 0, 0, 0, 0, 0 ]
     # alphas = [ 0, -sp.pi/2, 0, -sp.pi/2, sp.pi/2, 0 ]
     
-    #  the Stanford manipulator: Lec06-Jacobian.pdf p34 (wrong o_1, J_6 and missing o_2)
+    # 3. the Stanford manipulator: Lec06-Jacobian.pdf p34 (wrong o_1, J_6 and missing o_2) ! need to verify
+    # compute_type = 'sym'  # 'sym' or 'num'
+    # joint_types = [ 'r', 'r', 'p', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
+    
     # thetas = [ sp.symbols('theta_1'), sp.symbols('theta_2'), 0, sp.symbols('theta_4'), sp.symbols('theta_5'), sp.symbols('theta_6') ]
     # ds = [ 0, sp.symbols('d_2'), sp.symbols('d_3'), 0, 0, sp.symbols('d_6') ]
     # ase = [ 0, 0, 0, 0, 0, 0 ]
     # alphas = [ -sp.pi/2, sp.pi/2, 0, -sp.pi/2, sp.pi/2, 0 ]
     
-    # DH parameters for PUMA 560 manipulator (6 DoF) (numerical values)
-    # thetas = [ sp.pi/8, sp.pi/4, sp.pi/3, sp.pi/4, 0, -0.3 ]
-    # alphas = [ 0, -sp.pi/2, 0, -sp.pi/2, sp.pi/2, -sp.pi/2 ]
-    # ase = [ 0, 0, 17, 3.7, 0, 0 ]
-    # ds = [ 0, 0, 9.2, 17.05, 0, 0 ]
+    # 4. DH parameters for PUMA 560 manipulator (6 DoF) (symbolic values) - given in the Lab 1, Lab 3 and Assignment 3
+    compute_type = 'sym'  # 'sym' or 'num'
+    joint_types = [ 'r', 'r', 'r', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
     
-    # DH parameters for PUMA 560 manipulator (6 DoF) (symbolic values)
     thetas = [ sp.symbols('theta_1'), sp.symbols('theta_2'), sp.symbols('theta_3'), sp.symbols('theta_4'), sp.symbols('theta_5'), sp.symbols('theta_6') ]
     alphas = [ 0, -sp.pi/2, 0, -sp.pi/2, sp.pi/2, -sp.pi/2 ]
     ase = [ 0, 0, sp.symbols('a_2'), sp.symbols('a_3'), 0, 0 ]
     ds = [ 0, 0, sp.symbols('d_3'), sp.symbols('d_4'), 0, 0 ]
     
+    # 5. DH parameters for PUMA 560 manipulator (6 DoF) (numerical values)  - given in the Lab 1, Lab 3 and Assignment 3
+    # compute_type = 'num'  # 'sym' or 'num'
+    # joint_types = [ 'r', 'r', 'r', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
+    
+    # thetas = [ sp.pi/8, sp.pi/4, sp.pi/3, sp.pi/4, 0, -0.3 ]
+    # alphas = [ 0, -sp.pi/2, 0, -sp.pi/2, sp.pi/2, -sp.pi/2 ]
+    # ase = [ 0, 0, 17, 3.7, 0, 0 ]
+    # ds = [ 0, 0, 9.2, 17.05, 0, 0 ]
+    
+    # 6. Following the article "https://hive.blog/hive-196387/@juecoree/forward-kinematics-of-puma-560-robot-using-dh-method"
+    # DH parameters for PUMA 560 manipulator (6 DoF) (symbolic values) by assuming d_1, d_6 = 0
+    # compute_type = 'sym'  # 'sym' or 'num'
+    # joint_types = [ 'r', 'r', 'r', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
+    
+    # thetas = [ sp.symbols('theta_1'), sp.symbols('theta_2'), sp.symbols('theta_3'), sp.symbols('theta_4'), sp.symbols('theta_5'), sp.symbols('theta_6') ]
+    # alphas = [ -sp.pi/2, 0, sp.pi/2, -sp.pi/2, sp.pi/2, 0 ]
+    # ase = [ 0, sp.symbols('a_2'), sp.symbols('a_3'), 0, 0, 0 ]
+    # ds = [ 0, sp.symbols('d_2'), 0, sp.symbols('d_4'), 0, 0 ]
+    
+    # Compute forward kinematics
     # T_i0 = forwardMat(thetas, alphas, ds, ase)
     # sp.init_printing()  # Pretty output
     # print("Denavit-Hartenberg Transformation Matrix T_i0:\n")
