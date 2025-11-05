@@ -70,7 +70,6 @@ def forwardMat(thetas, alphas, ds, ase):
 # calculate origins and z axes of each frame
 def computeOriginsAndZAxes(thetas, alphas, ds, ase):
     """Extract each Origin and Zaxis based on DH parameters
-
     Args:
         thetas (list[n, 1]): list of all joint variables
         alphas (list[n, 1]): list of all link twist angles
@@ -145,7 +144,6 @@ def computeJacobian(origins, z_axes, joint_types):
 
 def printMatrices(origins, z_axes, J, compute_type='sym'):
     """Print origins, z-axes, and Jacobian matrix.
-
     Args:
         origins (list[n, 3, 1]): list of origin positions [O_0, O_1, ..., O_n]
         z_axes (list[n, 3, 1]): list of z-axis vectors [Z_0, Z_1, ..., Z_n-1]
