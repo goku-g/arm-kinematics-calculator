@@ -172,7 +172,7 @@ def printMatrices(origins, z_axes, J, compute_type='sym'):
         print()
     
     print("\nJacobian Matrices Ji:\n")
-    for i in range(J.rows):
+    for i in range(len(joint_types)):
         print(f"\nJ{i+1} - Jacobian for {i+1} ({'revolute' if joint_types[i]=='r' else 'prismatic'}) joint:\n")
         if compute_type == 'sym':
             sp.pprint(sp.simplify(J[:, i]), use_unicode=True)
@@ -227,13 +227,13 @@ if __name__ == "__main__":
     # alphas = [ -sp.pi/2, sp.pi/2, 0, -sp.pi/2, sp.pi/2, 0 ]
     
     # 4. DH parameters for PUMA 560 manipulator (6 DoF) (symbolic values) - given in the Lab 1, Lab 3 and Assignment 3
-    compute_type = 'sym'  # 'sym' or 'num'
-    joint_types = [ 'r', 'r', 'r', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
+    # compute_type = 'sym'  # 'sym' or 'num'
+    # joint_types = [ 'r', 'r', 'r', 'r', 'r', 'r' ]  #joint types - 'r' for revolute, 'p' for prismatic
     
-    thetas = [ sp.symbols('theta_1'), sp.symbols('theta_2'), sp.symbols('theta_3'), sp.symbols('theta_4'), sp.symbols('theta_5'), sp.symbols('theta_6') ]
-    alphas = [ 0, -sp.pi/2, 0, -sp.pi/2, sp.pi/2, -sp.pi/2 ]
-    ase = [ 0, 0, sp.symbols('a_2'), sp.symbols('a_3'), 0, 0 ]
-    ds = [ 0, 0, sp.symbols('d_3'), sp.symbols('d_4'), 0, 0 ]
+    # thetas = [ sp.symbols('theta_1'), sp.symbols('theta_2'), sp.symbols('theta_3'), sp.symbols('theta_4'), sp.symbols('theta_5'), sp.symbols('theta_6') ]
+    # alphas = [ 0, -sp.pi/2, 0, -sp.pi/2, sp.pi/2, -sp.pi/2 ]
+    # ase = [ 0, 0, sp.symbols('a_2'), sp.symbols('a_3'), 0, 0 ]
+    # ds = [ 0, 0, sp.symbols('d_3'), sp.symbols('d_4'), 0, 0 ]
     
     # 5. DH parameters for PUMA 560 manipulator (6 DoF) (numerical values)  - given in the Lab 1, Lab 3 and Assignment 3
     # compute_type = 'num'  # 'sym' or 'num'
@@ -253,6 +253,14 @@ if __name__ == "__main__":
     # alphas = [ -sp.pi/2, 0, sp.pi/2, -sp.pi/2, sp.pi/2, 0 ]
     # ase = [ 0, sp.symbols('a_2'), sp.symbols('a_3'), 0, 0, 0 ]
     # ds = [ 0, sp.symbols('d_2'), 0, sp.symbols('d_4'), 0, 0 ]
+    
+    joint_types = [ 'p', 'p', 'p' ]  #joint types - 'r' for revolute, 'p' for prismatic
+    compute_type = 'sym'  # 'sym' or 'num'
+    
+    thetas = [ -sp.pi/2, sp.pi/2, 0 ]
+    alphas = [ -sp.pi/2, -sp.pi/2, 0 ]
+    ase = [ 0, 0, 0 ]
+    ds = [ sp.symbols('d_1'), sp.symbols('d_2'), sp.symbols('d_3') ]
     
     # Compute forward kinematics
     # T_i0 = forwardMat(thetas, alphas, ds, ase)
